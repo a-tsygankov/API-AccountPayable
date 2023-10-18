@@ -17,12 +17,13 @@ Persistance: SQLLIte
 ### Entities and data schema
 1. Vendor 
    - id: number
-   - DisplayName: string
+   - displayName: string
 2. Acount 
    - id: number
-   - DisplayName: string
+   - displayName: string
 3. Bill
     - id: number
+    - orderOf: string
     - vendorId: number (FK to Vendor.id)
     - acountId: number (FK to Account.id)
     - amount: number
@@ -30,7 +31,7 @@ Persistance: SQLLIte
     - paid: bool
 4. Payment 
    - id: number 
-   - billId: string (FK to Bill.Id)
+   - billId: numbere (FK to Bill.Id)
    - paymentDate: Date
    - amount: number
    - paymentMethod: number (FK to PaymentMethod)
@@ -108,16 +109,18 @@ PUT /payments/<id> {isPaid:true}
 ```
 [
   {
-    "billId": 1, // Bill ID
+    "id": 1, // Bill ID
+    "orderOf": "Flowers"
     "vendorId": 10, // Vendor ID
     "amount": 500, // Bill amount
     "paymentId": 123, // Associated payment ID
-    "paymentMethod": "Bank transfer", // Payment method
+    "paymentMethod": 23, // Payment method
     "paymentDate": "2023-10-25" // Payment date
   },
   {
-    "billId": 2,
-    "vendorId": 12,
+    "id": 2,
+    "orderOf": "Wine"
+     "vendorId": 12,
     "amount": 300,
     "paymentId": 124,
     "paymentMethod": "Email transfer",

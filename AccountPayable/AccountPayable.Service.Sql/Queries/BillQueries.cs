@@ -10,12 +10,13 @@ namespace AccountPayable.Sql.Queries
         public static string BillById => "SELECT * FROM [Bill] (NOLOCK) WHERE [Id] = @Id";
 
         public static string AddBill =>
-            @"INSERT INTO [Bill] ([AccountId], [VendorId], [Amount], [DueDate], [Paid]) 
-				VALUES (@AccountId, @VendorId, @Amount, @DueDate, @Paid)";
+            @"INSERT INTO [Bill] ([OrderOf], [AccountId], [VendorId], [Amount], [DueDate], [Paid]) 
+				VALUES (@OrderOf, @AccountId, @VendorId, @Amount, @DueDate, @Paid)";
 
         public static string UpdateBill =>
             @"UPDATE [Bill] 
-            SET [AccountId] = @AccountId, 
+            SET [OrderOf] = @OrderOf, 
+				[AccountId] = @AccountId, 
 				[VendorId] = @VendorId, 
 				[Amount] = @Amount, 
 				[DueDate] = @DueDate

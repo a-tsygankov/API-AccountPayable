@@ -1,45 +1,71 @@
 ﻿using System.Collections.Concurrent;
+using AccountPayable.Core.Entities;
 using AccountPayable.Core.Interfaces;
 
 namespace AccountPayable.Service.Tests.Mocks
 {
     public class MockBaseRepository<T> : IRepository<T> where T : IEntity
     {
-        IDictionary<long, T> _list = new ConcurrentDictionary<long, T>();
+        public IDictionary<long, T> Entities = new ConcurrentDictionary<long, T>();
 
 		public MockBaseRepository()
 		{
+            
 		}
+
+        public void Load(T[]? initial = null)
+        {
+            initial?.ToList().ForEach(x => Entities[x.Id] = x);
+        }
 
         public async Task<string> AddAsync(T entity)
         {
-            // no extra checks -- early failure !!!
+            // @todo no extra checks -- early failure !!!
 
-            _list[entity.Id] = entity;
+            Entities[entity.Id] = entity;
             return "";
         }
 
         public async Task<string> DeleteAsync(long id)
         {
-            _list.Remove(id);
+            Entities.Remove(id);
             return "";
         }
 
         public async Task<IReadOnlyList<T>> GetAllAsync()
         {
-            return _list.Values.ToList();
+            return Entities.Values.ToList();
         }
 
         public async Task<T> GetByIdAsync(long id)
         {
-            return _list[id];
+            return Entities[id];
         }
 
         public async Task<string> UpdateAsync(T entity)
         {
-            _list[entity.Id] = entity;
+            Entities[entity.Id] = entity;
             return "";
         }
+    }
+
+
+
+    public class MockVendorRepo : MockBaseRepository<Vendor>, IVendorRepository
+    {
+
+    }
+    public class MockPaymentMethodRepo : MockBaseRepository<PaymentMethod>, IPaymentMethodRepository
+    {
+
+    }
+    public class MockBillRepo : MockBaseRepository<Bill>, IBillRepository
+    {
+
+    }
+    public class MockPaymentRepo : MockBaseRepository<Payment>, IPaymentRepository
+    {
+
     }
 }
 

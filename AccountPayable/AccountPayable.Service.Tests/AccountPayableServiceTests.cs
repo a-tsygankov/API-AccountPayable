@@ -1,15 +1,22 @@
-﻿namespace AccountPayable.Service.Tests;
+﻿using AccountPayable.Core.Entities;
+using AccountPayable.Core.Interfaces;
+using AccountPayable.Service.Tests.Mocks;
+
+namespace AccountPayable.Service.Tests;
 
 public class AccountPayableServiceTests
 {
+    IVendorRepository vendors;
     public AccountPayableServiceTests()
     {
         // run fixture
+
+        vendors = Fixture.createVendorRepo();
     }
 
     [Fact]
-    public async void GetAllBillsTest()
+    public void GetAllBillsTest()
     {
-
+        Assert.NotNull(vendors);
     }
 }

@@ -31,5 +31,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AccountPayable.Core\AccountPayable.Core.csproj" />
+    <ProjectReference Include="..\AccountPayable.Service\AccountPayable.Service.csproj" />
   </ItemGroup>
 </Project>

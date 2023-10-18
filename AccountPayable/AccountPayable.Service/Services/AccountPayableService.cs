@@ -1,21 +1,21 @@
-﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
-using AccountPayable.Core.Entities;
+﻿using AccountPayable.Core.Entities;
 using AccountPayable.Core.Interfaces;
+using AccountPayable.Core.Util;
 using AccountPayable.Service.Interfaces;
+using AccountPayable.Service.Validators;
 using Microsoft.Extensions.Logging;
 
 namespace AccountPayable.Service.Services
 {
-	public class AccountPayableService : IAccountPayableService
+    public class AccountPayableService : IAccountPayableService
     {
         private IVendorRepository _vendorRepository;
         private IPaymentMethodRepository _paymentMethodRepository;
         private IPaymentRepository _paymentRepository;
         private IBillRepository _billRepository;
         private ILogger<AccountPayableService> _logger;
-
+        private BillCanBeMarkedPaidValidator _billCanBeMarkedAsPaid;
+             
         public AccountPayableService(IVendorRepository vendorRepository,
                                      IPaymentMethodRepository paymentMethodRepository,
                                      IPaymentRepository paymentRepository,
@@ -26,6 +26,9 @@ namespace AccountPayable.Service.Services
             _paymentMethodRepository = paymentMethodRepository;
             _billRepository = billRepository;
             _logger = logger;
+
+            _billCanBeMarkedAsPaid = new BillCanBeMarkedPaidValidator(_paymentRepository);
+           
 
             _logger.LogInformation("Started");
 		}
@@ -42,16 +45,22 @@ namespace AccountPayable.Service.Services
 
         public async Task<string> MarkBillsAsPaidAsync(IReadOnlyList<long> billIds)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
 
-            //var billsToUpdate = billIds
-            //    .ToAsyncEnumerable()
-            //    .SelectAwait(async x => await _billRepository.GetByIdAsync(x));
+            var billsToUpdate = billIds
+                .ToAsyncEnumerable()
+                .SelectAwait(async x => await _billRepository.GetByIdAsync(x));
 
-            //var payments = billsToUpdate.ToDictionaryAsync(async x => (x., await _paymentRepository.GetByIdAsync(x.))
+            await foreach (var bill in billsToUpdate)
+            {
+                if (!_billCanBeMarkedAsPaid.IsValid(bill))
+                {
+                    // @todo graceful validation errors
+                    throw new Exception($"Bill {bill.ToDump()} cannot be marked as paid");
+                }
+            }
 
-
-            //ValidatePaymentCompleted();
+            return "Bills are marked as paid";
         }
 
         private object ValidatePaymentCompleted()

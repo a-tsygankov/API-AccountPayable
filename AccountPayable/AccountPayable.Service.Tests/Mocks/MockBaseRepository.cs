@@ -1,37 +1,44 @@
-﻿using System;
+﻿using System.Collections.Concurrent;
 using AccountPayable.Core.Interfaces;
 
 namespace AccountPayable.Service.Tests.Mocks
 {
-	public class MockBaseRepository<T> : IRepository<T> where T : class
+    public class MockBaseRepository<T> : IRepository<T> where T : IEntity
     {
+        IDictionary<long, T> _list = new ConcurrentDictionary<long, T>();
+
 		public MockBaseRepository()
 		{
 		}
 
-        public Task<string> AddAsync(T entity)
+        public async Task<string> AddAsync(T entity)
         {
-            throw new NotImplementedException();
+            // no extra checks -- early failure !!!
+
+            _list[entity.Id] = entity;
+            return "";
         }
 
-        public Task<string> DeleteAsync(long id)
+        public async Task<string> DeleteAsync(long id)
         {
-            throw new NotImplementedException();
+            _list.Remove(id);
+            return "";
         }
 
-        public Task<IReadOnlyList<T>> GetAllAsync()
+        public async Task<IReadOnlyList<T>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return _list.Values.ToList();
         }
 
-        public Task<T> GetByIdAsync(long id)
+        public async Task<T> GetByIdAsync(long id)
         {
-            throw new NotImplementedException();
+            return _list[id];
         }
 
-        public Task<string> UpdateAsync(T entity)
+        public async Task<string> UpdateAsync(T entity)
         {
-            throw new NotImplementedException();
+            _list[entity.Id] = entity;
+            return "";
         }
     }
 }

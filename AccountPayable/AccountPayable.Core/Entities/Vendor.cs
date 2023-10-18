@@ -1,7 +1,8 @@
-﻿using System;
+﻿using AccountPayable.Core.Interfaces;
+
 namespace AccountPayable.Core.Entities
 {
-	public class Vendor
+    public class Vendor : IEntity
 	{
         public long Id { get; set; }
 

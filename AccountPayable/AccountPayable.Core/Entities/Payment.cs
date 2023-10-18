@@ -1,8 +1,9 @@
-﻿using System;
+﻿using AccountPayable.Core.Interfaces;
+
 namespace AccountPayable.Core.Entities
 {
-	public class Payment
-	{
+	public class Payment : IEntity
+    {
         public long Id { get; set; }
 
         public long BillId { get; set; }

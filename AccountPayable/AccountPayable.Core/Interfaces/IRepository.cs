@@ -1,7 +1,7 @@
 ﻿using System;
 namespace AccountPayable.Core.Interfaces
 {
-	public interface IRepository<T> where T : class
+	public interface IRepository<T> where T : IEntity
     {
         Task<IReadOnlyList<T>> GetAllAsync();
 

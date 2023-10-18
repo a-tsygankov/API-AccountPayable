@@ -24,6 +24,10 @@ namespace AccountPayable.Service.Services
         {
             throw new NotImplementedException();
         }
+
+ /**
+ * Crud methods implementatoion for Bill/Vendor/Payment/etc entities should be in separate services
+ */
     }
 }
 

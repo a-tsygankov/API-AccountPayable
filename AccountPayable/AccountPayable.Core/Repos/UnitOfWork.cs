@@ -1,11 +1,12 @@
-﻿using AccountPayable.Core.Interfaces;
+﻿using System.Data.Common;
+using AccountPayable.Core.Interfaces;
 
 namespace AccountPayable.Core.Repos
 {
     /**
      * @todo rework this class to share IDbConnection instance between all repos
      */
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork, IDisposable
 
 	{
         public IVendorRepository Vendors { get; }
@@ -28,6 +29,26 @@ namespace AccountPayable.Core.Repos
             Bills = billRepository;
 		}
 
+        /*@todo Use IAsyncDisposable with awaiting all running tasks finished*/
+        private bool disposed;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+                    // disposing repos
+                }
+
+                disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
     }
 }
 

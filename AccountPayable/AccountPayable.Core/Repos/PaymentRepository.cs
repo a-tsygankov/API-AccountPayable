@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
+using AccountPayable.Core.Entities;
 using AccountPayable.Core.Interfaces;
 using AccountPayable.Core.Util;
 using AccountPayable.Sql.Queries;
@@ -10,13 +11,13 @@ using static Dapper.SqlMapper;
 
 namespace AccountPayable.Core.Repos
 {
-    public class BaseRepository<T> : IRepository<T>, IDisposable where T : class
-    {
-        private readonly ILogger<BaseRepository<T>> _logger;
+    public class BillRepository : IBillRepository
+	{
+        private readonly ILogger<BillRepository> _logger;
         private readonly IConfiguration _configuration;
         private readonly IDbConnection _connection;
 
-        public BaseRepository(ILogger<BaseRepository<T>> logger, IConfiguration configuration)
+        public BillRepository(ILogger<BillRepository> logger, IConfiguration configuration)
 		{
             this._logger = logger;
             this._configuration = configuration;
@@ -26,18 +27,18 @@ namespace AccountPayable.Core.Repos
             _connection.Open();
         }
 
-        public async Task<IReadOnlyList<T>> GetAllAsync()
+        public async Task<IReadOnlyList<Bill>> GetAllAsync()
         {
-            var result = await _connection.QueryAsync<T>(BillQueries.AllBill);
+            var result = await _connection.QueryAsync<Bill>(BillQueries.AllBill);
 
             _logger.LogDebug($"All bills requested. Retrieved: {result?.Count()}");
 
             return result.ToList();
         }
 
-        public async Task<T> GetByIdAsync(long id)
+        public async Task<Bill> GetByIdAsync(long id)
         {
-            var result = await _connection.QuerySingleOrDefaultAsync<T>(BillQueries.BillById, new { Id = id });
+            var result = await _connection.QuerySingleOrDefaultAsync<Bill>(BillQueries.BillById, new { Id = id });
 
             if (_logger.IsEnabled(LogLevel.Debug))
             {
@@ -46,7 +47,7 @@ namespace AccountPayable.Core.Repos
             return result;
         }
 
-        public async Task<string> AddAsync(T entity)
+        public async Task<string> AddAsync(Bill entity)
         {
             var result = await _connection.ExecuteAsync(BillQueries.AddBill, entity);
 
@@ -70,7 +71,7 @@ namespace AccountPayable.Core.Repos
 
 
 
-        public async Task<string> UpdateAsync(T entity)
+        public async Task<string> UpdateAsync(Bill entity)
         {
             var result = await _connection.ExecuteAsync(BillQueries.UpdateBill, entity);
             if (_logger.IsEnabled(LogLevel.Debug))

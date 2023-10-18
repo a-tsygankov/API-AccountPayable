@@ -11,13 +11,13 @@ using static Dapper.SqlMapper;
 
 namespace AccountPayable.Core.Repos
 {
-    public class BillRepository : IBillRepository
+    public class PaymentRepository : IPaymentRepository
 	{
-        private readonly ILogger<BillRepository> _logger;
+        private readonly ILogger<PaymentRepository> _logger;
         private readonly IConfiguration _configuration;
         private readonly IDbConnection _connection;
 
-        public BillRepository(ILogger<BillRepository> logger, IConfiguration configuration)
+        public PaymentRepository(ILogger<PaymentRepository> logger, IConfiguration configuration)
 		{
             this._logger = logger;
             this._configuration = configuration;
@@ -27,42 +27,42 @@ namespace AccountPayable.Core.Repos
             _connection.Open();
         }
 
-        public async Task<IReadOnlyList<Bill>> GetAllAsync()
+        public async Task<IReadOnlyList<Payment>> GetAllAsync()
         {
-            var result = await _connection.QueryAsync<Bill>(BillQueries.AllBill);
+            var result = await _connection.QueryAsync<Payment>(PaymentQueries.AllPayment);
 
-            _logger.LogDebug($"All bills requested. Retrieved: {result?.Count()}");
+            _logger.LogDebug($"All Payments requested. Retrieved: {result?.Count()}");
 
             return result.ToList();
         }
 
-        public async Task<Bill> GetByIdAsync(long id)
+        public async Task<Payment> GetByIdAsync(long id)
         {
-            var result = await _connection.QuerySingleOrDefaultAsync<Bill>(BillQueries.BillById, new { Id = id });
+            var result = await _connection.QuerySingleOrDefaultAsync<Payment>(PaymentQueries.PaymentById, new { Id = id });
 
             if (_logger.IsEnabled(LogLevel.Debug))
             {
-                _logger.LogDebug($"Bill [{id}] requested. Retrieved: {result?.ToDump()}");
+                _logger.LogDebug($"Payment [{id}] requested. Retrieved: {result?.ToDump()}");
             }
             return result;
         }
 
-        public async Task<string> AddAsync(Bill entity)
+        public async Task<string> AddAsync(Payment entity)
         {
-            var result = await _connection.ExecuteAsync(BillQueries.AddBill, entity);
+            var result = await _connection.ExecuteAsync(PaymentQueries.AddPayment, entity);
 
             if (_logger.IsEnabled(LogLevel.Debug))
             {
-                _logger.LogDebug($"Bill [{entity?.ToDump()}] added.");
+                _logger.LogDebug($"Payment [{entity?.ToDump()}] added.");
             }
             return result.ToString();
         }
 
         public async Task<string> DeleteAsync(long id)
         {
-            var result = await _connection.ExecuteAsync(BillQueries.DeleteBill, new { Id = id });
+            var result = await _connection.ExecuteAsync(PaymentQueries.DeletePayment, new { Id = id });
 
-            _logger.LogDebug($"Bill [{id}] deleteded.");
+            _logger.LogDebug($"Payment [{id}] deleteded.");
 
             return result.ToString();
         }
@@ -71,12 +71,12 @@ namespace AccountPayable.Core.Repos
 
 
 
-        public async Task<string> UpdateAsync(Bill entity)
+        public async Task<string> UpdateAsync(Payment entity)
         {
-            var result = await _connection.ExecuteAsync(BillQueries.UpdateBill, entity);
+            var result = await _connection.ExecuteAsync(PaymentQueries.UpdatePayment, entity);
             if (_logger.IsEnabled(LogLevel.Debug))
             {
-                _logger.LogDebug($"Bill updated to [{entity?.ToDump()}].");
+                _logger.LogDebug($"Payment updated to [{entity?.ToDump()}].");
             }
             return result.ToString();
         }

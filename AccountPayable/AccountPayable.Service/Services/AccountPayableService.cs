@@ -1,13 +1,32 @@
 ﻿using System;
+using System.Linq;
 using AccountPayable.Core.Entities;
+using AccountPayable.Core.Interfaces;
 using AccountPayable.Service.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace AccountPayable.Service.Services
 {
 	public class AccountPayableService : IAccountPayableService
     {
-		public AccountPayableService()
+        private IVendorRepository _vendorRepository;
+        private IPaymentMethodRepository _paymentMethodRepository;
+        private IPaymentRepository _paymentRepository;
+        private IBillRepository _billRepository;
+        private ILogger<AccountPayableService> _logger;
+
+        public AccountPayableService(IVendorRepository vendorRepository,
+                                     IPaymentMethodRepository paymentMethodRepository,
+                                     IPaymentRepository paymentRepository,
+                                     IBillRepository billRepository,
+                                     ILogger<AccountPayableService> logger)
 		{
+            _vendorRepository = vendorRepository;
+            _paymentMethodRepository = paymentMethodRepository;
+            _billRepository = billRepository;
+            _logger = logger;
+
+            _logger.LogInformation("Started");
 		}
 
         public Task<string> CreatePaymentAsync(Payment entity)
@@ -20,9 +39,11 @@ namespace AccountPayable.Service.Services
             throw new NotImplementedException();
         }
 
-        public Task<string> MarkBillsAsPaidAsync(IReadOnlyList<long> billIds)
+        public async Task<string> MarkBillsAsPaidAsync(IReadOnlyList<long> billIds)
         {
-            throw new NotImplementedException();
+            var billsToUpdate =  billIds.Select(async x => await _billRepository.GetByIdAsync(x));
+            var payments = billIds.ToDictionary(x => (x, await _paymentRepository.GetByIdAsync())
+            ValidatePaymentCompleted()
         }
 
  /**

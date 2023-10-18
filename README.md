@@ -14,7 +14,7 @@ ORM: Drapper, EF Core
 Persistance: SQLLIte
 
 
-### Entities and data schema
+### Entities and data schema (*ask Mike*)
 1. Vendor 
    - id: number
    - displayName: string

@@ -11,7 +11,7 @@ using static Dapper.SqlMapper;
 
 namespace AccountPayable.Core.Repos
 {
-    public class BaseRepository<T> : IRepository<T>, IDisposable where T : class
+    public abstract class BaseRepository<T> : IRepository<T>, IDisposable where T : class
     {
         private readonly ILogger<BaseRepository<T>> _logger;
         private readonly IConfiguration _configuration;

@@ -1,7 +1,6 @@
-﻿using System;
-namespace AccountPayable.Core.Interfaces
+﻿namespace AccountPayable.Core.Interfaces
 {
-	public interface IUnitOfWork
+    public interface IUnitOfWork
 	{
         public IVendorRepository Vendors { get; }
 

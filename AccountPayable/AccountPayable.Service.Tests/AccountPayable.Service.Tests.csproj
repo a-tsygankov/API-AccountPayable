@@ -22,8 +22,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\AccountPayable.Core\AccountPayable.Core.csproj" />
-    <ProjectReference Include="..\AccountPayable.API\AccountPayable.API.csproj" />
-  </ItemGroup>
 </Project>

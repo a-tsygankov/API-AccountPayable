@@ -16,24 +16,24 @@ Persistance: SQLLIte
 
 ### Entities and data schema
 1. Vendor 
-   - id: string
+   - id: number
    - DisplayName: string
 2. Acount 
-   - id: string
+   - id: number
    - DisplayName: string
 3. Bill
-    - id: string
-    - vendorId: string (FK to Vendor.id)
-    - acountId: string (FK to Account.id)
+    - id: number
+    - vendorId: number (FK to Vendor.id)
+    - acountId: number (FK to Account.id)
     - amount: number
     - dueDate: Date
     - paid: bool
 4. Payment 
-   - id: string 
+   - id: number 
    - billId: string (FK to Bill.Id)
    - paymentDate: Date
    - amount: number
-   - paymentMethod: string (FK to PaymentMethod)
+   - paymentMethod: number (FK to PaymentMethod)
 
 5. PaymentMethod (enum)
 6. 
@@ -146,13 +146,14 @@ End-to-end tests using Swagger UI to simulate user interactions.
 
 ### Assumptions
 - Authentication/authorization: system-wide, build-in MS or placeholder for JWT token 
-- Idempotency (*ask Mike*): one of the operation (bill creation) is vulnarable to repeatition. Not critical for vendor operations or payments. Can be solve by using system-wide service/framework or implemented by persisting form id and checking it.
+- Idempotency (*ask Mike*): one of the operation (bill creation) is vulnarable to repeatition. Not critical for vendor operations or payment methods. Can be solve by using system-wide service/framework or implemented by persisting form id and checking it.
 - Performance (*ask Mike*): rudimental caching of vendors
 - Completeness of API (*ask Mike*): some entities like Vendor need to have full CRUD implementation but this is probabaly out of scope here
 - Security: all operations must be logged to persisted storage (Kafka, EVentStoreDB)
 - Concurrent changes conflicts (*ask MIke*): every entity might have an updateCounter field which increments on modifications. This will allow to resolve issues with concurrent changes by comparing updateCount of current object with modification. 
 - Marking bill as paid and processing payment (*ask Mike*): considered as separate operations. I.e, bill can be splitted and paid by two different methods. This approach requires extra validation when marking bill as paid.
 - Payment Methods (*ask Mike*) entity may represent either system-wide  or specific for a particular account holder. Extra details do not add much logic to this implementation. So I implemented it as a simple enum without much parameters.
+- Switching ids to integers for simplicity
 
 [link](https://github.com/plootoinc/BE-take-home-task-AndreyTsygankov/)
 

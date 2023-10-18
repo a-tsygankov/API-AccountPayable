@@ -1,7 +1,7 @@
 ﻿using System;
 namespace AccountPayable.Core.Entities
 {
-	public class Vendor
+	public class PaymentMethod
 	{
         public int Id { get; set; }
 

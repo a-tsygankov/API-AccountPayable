@@ -3,7 +3,7 @@
 namespace AccountPayable.Sql.Queries
 {
     [ExcludeFromCodeCoverage]
-    public static class PaymentQueries
+    public class PaymentQueries : ICrudQueries
     {
         public static string AllPayment=> "SELECT * FROM [Payment] (NOLOCK)";
 
@@ -23,5 +23,30 @@ namespace AccountPayable.Sql.Queries
             WHERE [Id] = @Id";
 
         public static string DeletePayment => "DELETE FROM [Payment] WHERE [Id] = @Id";
+
+        public string Add()
+        {
+            return AddPayment;
+        }
+
+        public string Delete()
+        {
+            return DeletePayment;
+        }
+
+        public string GetAll()
+        {
+            return AllPayment;
+        }
+
+        public string GetById()
+        {
+            return PaymentById;
+        }
+
+        public string Update()
+        {
+            return UpdatePayment;
+        }
     }
 }

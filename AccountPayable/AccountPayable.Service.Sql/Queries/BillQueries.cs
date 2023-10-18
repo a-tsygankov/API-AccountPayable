@@ -3,7 +3,7 @@
 namespace AccountPayable.Sql.Queries
 {
     [ExcludeFromCodeCoverage]
-    public static class BillQueries
+    public class BillQueries : ICrudQueries
     {
         public static string AllBill=> "SELECT * FROM [Bill] (NOLOCK)";
 
@@ -24,5 +24,30 @@ namespace AccountPayable.Sql.Queries
             WHERE [Id] = @Id";
 
         public static string DeleteBill => "DELETE FROM [Bill] WHERE [Id] = @Id";
+
+        public string Add()
+        {
+            return AddBill;
+        }
+
+        public string Delete()
+        {
+            return DeleteBill;
+        }
+
+        public string GetAll()
+        {
+            return AllBill;
+        }
+
+        public string GetById()
+        {
+            return BillById;
+        }
+
+        public string Update()
+        {
+            return UpdateBill;
+        }
     }
 }

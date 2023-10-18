@@ -14,6 +14,16 @@ namespace AccountPayable.Service.Services
         {
             throw new NotImplementedException();
         }
+
+        public Task<IReadOnlyList<Bill>> GetAllBillAsync(bool isPaid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string> MarkBillsAsPaidAsync(IReadOnlyList<long> billIds)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

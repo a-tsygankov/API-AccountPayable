@@ -15,7 +15,7 @@ namespace AccountPayable.Core.Repos
     {
         private readonly ILogger<BaseRepository<T>> _logger;
         private readonly IConfiguration _configuration;
-        private readonly IDbConnection _connection;
+        internal readonly IDbConnection _connection;
         private readonly ICrudQueries _queries;
 
         public BaseRepository(ILogger<BaseRepository<T>> logger, IConfiguration configuration)

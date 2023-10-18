@@ -65,7 +65,10 @@ namespace AccountPayable.Service.Tests.Mocks
     }
     public class MockPaymentRepo : MockBaseRepository<Payment>, IPaymentRepository
     {
-
+        public async Task<IReadOnlyList<Payment>> GetByBillIdAsync(long billId)
+        {
+            return Entities.Values.Where(x => x.BillId == billId).ToList();
+        }
     }
 }
 

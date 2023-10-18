@@ -9,6 +9,8 @@ namespace AccountPayable.Sql.Queries
 
         public static string PaymentById => "SELECT * FROM [Payment] (NOLOCK) WHERE [Id] = @Id";
 
+        public static string PaymentByBillId => "SELECT * FROM [Payment] (NOLOCK) WHERE [BillId] = @Id";
+
         public static string AddPayment =>
             @"INSERT INTO [Payment] ([BillId], [AccountId], [Amount], [PaymentDate], [PaymentMethodId]) 
 				VALUES (@BillId, @AccountId, @Amount, @PaymentDate, @PaymentMethodId)";

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Linq.Expressions;
 using AccountPayable.Core.Entities;
 using AccountPayable.Core.Interfaces;
 using AccountPayable.Service.Interfaces;
@@ -41,14 +42,26 @@ namespace AccountPayable.Service.Services
 
         public async Task<string> MarkBillsAsPaidAsync(IReadOnlyList<long> billIds)
         {
-            var billsToUpdate =  billIds.Select(async x => await _billRepository.GetByIdAsync(x));
-            var payments = billIds.ToDictionary(x => (x, await _paymentRepository.GetByIdAsync())
-            ValidatePaymentCompleted()
+            throw new NotImplementedException();
+
+            //var billsToUpdate = billIds
+            //    .ToAsyncEnumerable()
+            //    .SelectAwait(async x => await _billRepository.GetByIdAsync(x));
+
+            //var payments = billsToUpdate.ToDictionaryAsync(async x => (x., await _paymentRepository.GetByIdAsync(x.))
+
+
+            //ValidatePaymentCompleted();
         }
 
- /**
- * Crud methods implementatoion for Bill/Vendor/Payment/etc entities should be in separate services
- */
+        private object ValidatePaymentCompleted()
+        {
+            throw new NotImplementedException();
+        }
+
+        /**
+        * Crud methods implementatoion for Bill/Vendor/Payment/etc entities should be in separate services
+        */
     }
 }
 

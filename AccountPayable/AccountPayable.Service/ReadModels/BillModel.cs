@@ -11,7 +11,7 @@ namespace AccountPayable.Service.ReadModels
 
         public string VendorName { get; set; }
 
-        public string MaymentMethodName { get; set; }
+        public string PaymentMethodName { get; set; }
 
         public decimal Amount { get; set; }
 

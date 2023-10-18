@@ -28,6 +28,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AccountPayable.Service.Sql\AccountPayable.Sql.csproj" />
+    <ProjectReference Include="..\AccountPayable.Sql\AccountPayable.Sql.csproj" />
   </ItemGroup>
 </Project>

@@ -13,9 +13,9 @@ namespace AccountPayable.Core.Entities
 
         public DateTime PaymentDate { get; set; }
 
-        public long PaymentId { get; set; }
+        public long PaymenMethodId { get; set; }
 
-        public long UpdateCounter { get; set; }
+        //public long UpdateCounter { get; set; }
     }
 }
 

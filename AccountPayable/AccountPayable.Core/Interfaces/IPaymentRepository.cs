@@ -1,7 +1,7 @@
 ﻿using System;
 using AccountPayable.Core.Entities;
 
-namespace AccountPayable.Service.Interfaces
+namespace AccountPayable.Core.Interfaces
 {
 	public interface IPaymentRepository : IRepository<Payment>, IDisposable
 	{

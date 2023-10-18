@@ -7,7 +7,7 @@ namespace AccountPayable.Core.Entities
 
         public required string DisplayName { get; set; }
 
-        public long UpdateCounter { get; set; }
+        //public long UpdateCounter { get; set; }
     }
 }
 

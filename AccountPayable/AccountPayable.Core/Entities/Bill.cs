@@ -15,7 +15,7 @@ namespace AccountPayable.Core.Entities
 
         public bool Paid { get; set; }
 
-        public long UpdateCounter { get; set; }
+        //public long UpdateCounter { get; set; }
     }
 }
 

@@ -2,6 +2,9 @@
 
 namespace AccountPayable.Core.Repos
 {
+    /**
+     * @todo rework this class to share IDbConnection instance between all repos
+     */
     public class UnitOfWork : IUnitOfWork
 
 	{

@@ -3,11 +3,11 @@ namespace AccountPayable.Core.Entities
 {
 	public class Vendor
 	{
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public required string DisplayName { get; set; }
 
-        public int UpdateCounter { get; set; }
+        public long UpdateCounter { get; set; }
     }
 }
 

@@ -3,17 +3,19 @@ namespace AccountPayable.Core.Entities
 {
 	public class Bill
 	{
-        public int Id { get; set; }
+        public long Id { get; set; }
 
-        public int AccountId { get; set; }
+        public long AccountId { get; set; }
 
-        public int VendorId { get; set; }
+        public long VendorId { get; set; }
 
         public decimal Amount { get; set; }
 
         public DateTime DueDate { get; set; }
 
-        public int UpdateCounter { get; set; }
+        public bool Paid { get; set; }
+
+        public long UpdateCounter { get; set; }
     }
 }
 

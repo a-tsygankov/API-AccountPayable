@@ -1,5 +1,6 @@
 ﻿using System.Data.Common;
 using AccountPayable.Core.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace AccountPayable.Core.Repos
 {
@@ -21,16 +22,17 @@ namespace AccountPayable.Core.Repos
         public UnitOfWork(IVendorRepository vendorRepository,
                           IPaymentMethodRepository paymentMethodRepository,
                           IPaymentRepository paymentRepository,
-                          IBillRepository billRepository)
+                          IBillRepository billRepository) 
 		{
             Vendors = vendorRepository;
             PaymentMethods = paymentMethodRepository;
             Payments = paymentRepository;
             Bills = billRepository;
-		}
+        }
 
         /*@todo Use IAsyncDisposable with awaiting all running tasks finished*/
         private bool disposed;
+
         protected virtual void Dispose(bool disposing)
         {
             if (!disposed)

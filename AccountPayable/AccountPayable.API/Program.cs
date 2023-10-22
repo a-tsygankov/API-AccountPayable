@@ -8,7 +8,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.RegisterServices();
+builder.Services.RegisterServicesWithMockRepos();
+// builder.Services.RegisterServicesWithMockRepos();
 
 
 var app = builder.Build();
@@ -18,6 +19,10 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+else
+{
+    app.UseExceptionHandler("/error");
 }
 
 app.UseHttpsRedirection();

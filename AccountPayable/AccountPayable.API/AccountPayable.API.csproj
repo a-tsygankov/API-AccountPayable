@@ -20,5 +20,8 @@
     <ProjectReference Include="..\AccountPayable.Core\AccountPayable.Core.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+    <ProjectReference Include="..\AccountPayable.Service.Tests\AccountPayable.Service.Tests.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 </Project>

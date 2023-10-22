@@ -1,7 +1,6 @@
-﻿using System;
-namespace AccountPayable.Service.ReadModels
+﻿namespace AccountPayable.Service.ReadModels
 {
-	public class BillModel
+    public class BillRM
 	{
         public long Id { get; set; }
 

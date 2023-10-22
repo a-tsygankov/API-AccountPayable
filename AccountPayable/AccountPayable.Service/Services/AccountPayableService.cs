@@ -16,15 +16,12 @@ namespace AccountPayable.Service.Services
         private ILogger<AccountPayableService> _logger;
         private BillCanBeMarkedPaidValidator _billCanBeMarkedAsPaid;
              
-        public AccountPayableService(IVendorRepository vendorRepository,
-                                     IPaymentMethodRepository paymentMethodRepository,
-                                     IPaymentRepository paymentRepository,
-                                     IBillRepository billRepository,
-                                     ILogger<AccountPayableService> logger)
+        public AccountPayableService(IUnitOfWork unitOfWork, ILogger<AccountPayableService> logger)
 		{
-            _vendorRepository = vendorRepository;
-            _paymentMethodRepository = paymentMethodRepository;
-            _billRepository = billRepository;
+            _vendorRepository = unitOfWork.Vendors;
+            _paymentMethodRepository = unitOfWork.PaymentMethods;
+            _paymentRepository = unitOfWork.Payments;
+            _billRepository = unitOfWork.Bills;
             _logger = logger;
 
             _billCanBeMarkedAsPaid = new BillCanBeMarkedPaidValidator(_paymentRepository);
@@ -38,7 +35,7 @@ namespace AccountPayable.Service.Services
             throw new NotImplementedException();
         }
 
-        public Task<IReadOnlyList<Bill>> GetAllBillAsync(bool isPaid)
+        public Task<IReadOnlyList<Bill>> GetAllBillAsync(long? accountId, long? vendorId, bool isPaid = false)
         {
             throw new NotImplementedException();
         }

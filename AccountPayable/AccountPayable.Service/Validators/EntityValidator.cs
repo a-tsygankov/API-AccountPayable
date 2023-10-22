@@ -15,6 +15,8 @@ namespace AccountPayable.Service.Validators
         {
             if (validation == null)
                 throw new InvalidOperationException("Validation cannot be null");
+
+
             return validation.Invoke(entity);
         }
 	}

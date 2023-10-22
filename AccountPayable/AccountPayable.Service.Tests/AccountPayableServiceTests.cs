@@ -1,5 +1,6 @@
 ﻿using AccountPayable.Core.Entities;
 using AccountPayable.Core.Interfaces;
+using AccountPayable.Core.Repos;
 using AccountPayable.Service.Services;
 using AccountPayable.Service.Tests.Mocks;
 using Microsoft.Extensions.Logging;
@@ -36,7 +37,8 @@ public class AccountPayableServiceTests
     {
         var logger = Mock.Of<ILogger<AccountPayableService>>();
 
-        var service = new AccountPayableService(vendors, paymentMethods, payments, bills, logger);
+        var service = new AccountPayableService(new UnitOfWork(vendors, paymentMethods, payments, bills), logger);
+
 
         Assert.NotNull(await service.MarkBillsAsPaidAsync(new long[] { 1, 2 }));
     }

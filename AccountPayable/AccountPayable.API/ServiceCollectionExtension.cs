@@ -1,5 +1,7 @@
 ﻿using AccountPayable.Core.Interfaces;
 using AccountPayable.Core.Repos;
+using AccountPayable.Service.Services;
+using AccountPayable.Service.Tests.Mocks;
 
 namespace AccountPayable.API
 {
@@ -12,7 +14,19 @@ namespace AccountPayable.API
             services.AddTransient<IBillRepository, BillRepository>();
             services.AddTransient<IPaymentRepository, PaymentRepository>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<AccountPayableService>();
+            services.AddTransient<ReadModelService>();
+            
+        }
+
+        public static void RegisterServicesWithMockRepos(this IServiceCollection services)
+        {
+            services.AddTransient<IUnitOfWork, MockUnitOfWork>();
+            services.AddTransient<AccountPayableService>();
+            services.AddTransient<ReadModelService>();
+
         }
     }
+
 }
 

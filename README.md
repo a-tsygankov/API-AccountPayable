@@ -160,3 +160,9 @@ End-to-end tests using Swagger UI to simulate user interactions.
 
 [link](https://github.com/plootoinc/BE-take-home-task-AndreyTsygankov/)
 
+
+## todo
+
+- implement CancellationToken on every async method
+- add  IMemoryCache to IUnitOfWork (this will allow to cache only vendors and methods, without caching bills and payments)
+- implement view bills as query or mark bill as paid as separate method (not update)

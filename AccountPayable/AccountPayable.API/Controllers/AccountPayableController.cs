@@ -13,7 +13,7 @@ public class AccountPayableController : ControllerBase
 
     public AccountPayableController(IAccountPayableService service, ILogger<AccountPayableController> logger)
     {
-        this._service = service;
+        _service = service;
         _logger = logger;
     }
 

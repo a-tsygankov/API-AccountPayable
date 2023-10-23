@@ -43,7 +43,6 @@ Persistance: SQLLIte, mock in-memory implementation for tests and debugging
 
 
 
-
 ### API
 
 GET /vendors

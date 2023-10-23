@@ -50,7 +50,7 @@ namespace AccountPayable.Core.Repos
             return result;
         }
 
-        public async Task<string> AddAsync(T entity)
+        public async Task<string> Add(T entity)
         {
             var result = await _connection.ExecuteAsync(_queries.Add(), entity);
 

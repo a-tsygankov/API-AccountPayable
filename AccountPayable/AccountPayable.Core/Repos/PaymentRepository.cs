@@ -1,5 +1,4 @@
-﻿using System.Data.Common;
-using AccountPayable.Core.Entities;
+﻿using AccountPayable.Core.Entities;
 using AccountPayable.Core.Interfaces;
 using AccountPayable.Sql.Queries;
 using Dapper;

@@ -18,7 +18,7 @@
 
         /// <summary>
         /// @todo make this a list
-        /// If multiple payments then last payment date should appear
+        /// If multiple payments then first payment date should appear
         /// </summary>
         public string? PaymentMethodName { get; set; }
         /// <summary>
@@ -28,7 +28,7 @@
         public decimal? PaidAmount { get; set; }
         /// <summary>
         /// @todo make this a list
-        /// Until that If multiple payments then last payment date should appear
+        /// Until that If multiple payments then first payment date should appear
         /// </summary>
         public DateTime? PaymentDate { get; set; }  ///
 

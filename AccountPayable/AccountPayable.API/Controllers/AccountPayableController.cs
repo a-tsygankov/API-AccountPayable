@@ -20,7 +20,7 @@ public class AccountPayableController : ControllerBase
     [HttpGet(Name = "GetBills")]
     public async Task<IEnumerable<BillRM>> Get(long? accountId, long? vendorId, bool isPaid = false)
     {
-        var bills = await _service.GetAllBillAsync(accountId, vendorId, isPaid);
+        var bills = await _service.QueryBillsAsync(accountId, vendorId, isPaid);
 
         return Array.Empty<BillRM>();
     }

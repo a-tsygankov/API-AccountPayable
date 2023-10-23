@@ -11,7 +11,7 @@ Simple data structure and refernces can be easily described in relational format
 Logging: MS Logging. It can be wrapped in own abstraction layer if needed. 
 ORM: Drapper, EF Core
 
-Persistance: SQLLIte
+Persistance: SQLLIte, mock in-memory implementation for tests and debugging
 
 
 ### Entities and data schema (*ask Mike*)

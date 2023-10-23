@@ -8,7 +8,7 @@ namespace AccountPayable.Service.Interfaces
 
         Task<string> MarkBillsAsPaidAsync(IReadOnlyList<long> billIds);
 
-        Task<IReadOnlyList<Bill>> GetAllBillAsync(long? accountId, long? vendorId, bool isPaid = false);
+        Task<IReadOnlyList<Bill>> QueryBillsAsync(long? accountId, long? vendorId, bool isPaid = false);
 
         /**
          * Crud methods implementatoion for other entities

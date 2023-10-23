@@ -24,15 +24,42 @@ namespace AccountPayable.Service.Services
             _logger.LogInformation("Started");
 		}
 
-        public Task<string> CreatePaymentAsync(Payment entity)
+        public async Task<string> CreatePaymentAsync(long accountId, long billId, decimal amount, long paymentMethodId, DateTime paymentDate)
         {
-            _logger.LogDebug($"Create payment: {entity.ToDump()}");
+            _logger.LogDebug($"Create payment for accountId:{accountId}, billId:{billId}, amount: {amount}, paymentMethod: {paymentMethodId}, date: {paymentDate}");
+
+            var payment = new Payment
+            {
+                AccountId = accountId,
+                BillId = billId,
+                Amount = amount,
+                PaymentDate = paymentDate,
+                PaymenMethodId = paymentMethodId
+            };
 
             // @todo implement idempotency check
-            return  _unitOfWork.Payments.AddAsync(entity);
+            // stupid one, not thread safe, bad performance
+            var payments = await _unitOfWork.Payments.GetAllAsync();
+            var nextId = payments.Max(x => x.Id) + 1;
+
+            var matchingPayments = payments.Select(x => x.AccountId == accountId
+                                                        && x.BillId == billId
+                                                        && x.PaymenMethodId == paymentMethodId
+                                                        && x.Amount == amount
+                                                        && x.PaymentDate.AddHours(1) < DateTime.Today);
+            if (matchingPayments.Count() > 0)
+            {
+                _logger.LogWarning($"Found {matchingPayments.Count()} duplicate payments");
+                throw new Exception( "duplicate payments");
+            }
+            // -----
+
+            payment.Id = nextId;
+
+            return await _unitOfWork.Payments.AddAsync(payment);
         }
 
-        public async Task<IReadOnlyList<Bill>> QueryBillsAsync(long? accountId, long? vendorId, bool isPaid = false)
+        public async Task<IReadOnlyList<Bill>> QueryBillsAsync(long? accountId, long? vendorId, bool? isPaid = false)
         {
             var timer = new Stopwatch();
             _logger.LogDebug($"Query bills, accountId: {accountId}, vendorId: {vendorId}, isPaid: {isPaid}");
@@ -75,9 +102,7 @@ namespace AccountPayable.Service.Services
 
             return "Bills are marked as paid";
         }
-        /**
-        * Crud methods implementatoion for Bill/Vendor/Payment/etc entities should be in separate services
-        */
+
 
         private bool IsMatch(Bill bill, long? accountId, long? vendorId, bool? isPaid = false)
         {
@@ -93,6 +118,11 @@ namespace AccountPayable.Service.Services
 
             return true;
         }
+
+
+        /**
+        * Crud methods implementatoion for Bill/Vendor/Payment/etc entities should be in separate services
+        */
     }
 }
 

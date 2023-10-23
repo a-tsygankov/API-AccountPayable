@@ -90,6 +90,7 @@ Persistance: SQLIte, mock in-memory implementation for tests and debugging
  - **GET, endpoint: /api/v1/accounts/{accountId}/bills/query:** retrieves list of bills in form of read models according to querey parameters provided (accountId, vendorId, isPaid). If parameter is not provided then it's getting ignored in query.
  - **POST, endpoint /api/v1/accounts/{accountId}/bills/mark-paid:** marks list of bills paid if total amount of mayments matches bill's amount. 
  - **POST, endpoint /api/v1/accounts/{accountId}/payments:** payment Create method with parameters (accountId, billId, amount, paymentMethodId). PaymentDate set to current. If similar payment made within an hour is found in repository then idempotency check failed. This check is not required if we have a system-wide check for idempotency. 
+ - Some CRUD method implementation for entities may be needed in order to creaate or modify them (like vendors or payment methods)
 
 
 ### Implementation details
@@ -125,3 +126,4 @@ End-to-end tests using Swagger UI to simulate user interactions.
 - implement view bills as query or mark bill as paid as separate method (not update)
 - convert BillRM in order to keep a list of payments
 - add Swagger UI pages to repo
+- implement error hadling (along with returning proper response in API)

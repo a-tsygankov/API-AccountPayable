@@ -168,3 +168,4 @@ End-to-end tests using Swagger UI to simulate user interactions.
 - add  IMemoryCache to IUnitOfWork (this will allow to cache only vendors and methods, without caching bills and payments)
 - implement view bills as query or mark bill as paid as separate method (not update)
 - convert BillRM in order to keep a list of payments
+- 

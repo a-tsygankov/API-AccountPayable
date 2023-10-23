@@ -26,22 +26,28 @@ namespace AccountPayable.Service.Services
         {
             _logger.LogDebug($"Building Bill read models, count: {bills.Count}");
 
-            var result = bills.Select(async bill =>
-            {
-                var paymentsForBill = await _unitOfWork.Payments.GetByBillIdAsync(bill.Id);
-                return new BillRM()
+            var result = await bills.ToAsyncEnumerable()
+                .SelectAwait(
+                async bill =>
                 {
-                    Id = bill.Id,
-                    AccountId = bill.AccountId,
-                    OrderOf = bill.OrderOf,
-                    Amount = bill.Amount,
-                    DueDate = bill.DueDate,
-                    Paid = bill.Paid,
-                    PaymentMethodName = null,
-                };
-            }).ToList();
+                    var vendor = await _unitOfWork.Vendors.GetByIdAsync(bill.VendorId);
+                    var paymentsForBill = await _unitOfWork.Payments.GetByBillIdAsync(bill.Id);
+                    var billRM = new BillRM
+                    {
+                        Id = bill.Id,
+                        AccountId = bill.AccountId,
+                        OrderOf = bill.OrderOf,
+                        Amount = bill.Amount,
+                        DueDate = bill.DueDate,
+                        Paid = bill.Paid,
+                        VendorName = vendor.DisplayName,
+                        Payments = (await GetPaymentReadModelAsync((IList<Payment>)paymentsForBill)).ToArray()
+                    };
 
-            return (IReadOnlyList<BillRM>)result;
+                    return billRM;
+                }).ToListAsync();
+
+            return await Task.FromResult(result);
         }
 
         public async Task<IReadOnlyList<PaymentRM>> GetPaymentReadModelAsync(IList<Payment> payments)

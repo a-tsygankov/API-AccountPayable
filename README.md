@@ -31,13 +31,15 @@ Persistance: SQLLIte, mock in-memory implementation for tests and debugging
     - paid: bool
 4. Payment 
    - id: number 
+   - AcountId: number (FK to Account.id)
    - billId: numbere (FK to Bill.Id)
    - paymentDate: Date
    - amount: number
    - paymentMethod: number (FK to PaymentMethod)
 
 5. PaymentMethod (enum)
-6. 
+   - id: number
+   - displayName: string
 
 
 
@@ -166,3 +168,4 @@ End-to-end tests using Swagger UI to simulate user interactions.
 - implement CancellationToken on every async method
 - add  IMemoryCache to IUnitOfWork (this will allow to cache only vendors and methods, without caching bills and payments)
 - implement view bills as query or mark bill as paid as separate method (not update)
+- convert BillRM in order to keep a list of payments

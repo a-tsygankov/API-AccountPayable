@@ -21,6 +21,7 @@ public class AccountPayableController : ControllerBase
     public async Task<IEnumerable<BillRM>> Get(long? accountId, long? vendorId, bool isPaid = false)
     {
         var bills = await _service.QueryBillsAsync(accountId, vendorId, isPaid);
+        var billRMs = 
 
         return Array.Empty<BillRM>();
     }

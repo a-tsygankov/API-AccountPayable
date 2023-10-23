@@ -6,7 +6,7 @@ namespace AccountPayable.API.Controllers;
 
 [Produces("application/json")]
 [ApiController]
-[Route("v1/accounts/{accountId}/[action]")]
+[Route("api/v1/accounts/{accountId}/[action]")]
 public class AccountPayableController : ControllerBase
 {
     private readonly IAccountPayableService _service;
@@ -22,7 +22,6 @@ public class AccountPayableController : ControllerBase
 
     [ActionName("bills/query")]
     [HttpGet]
-    //[ApiConventionMethod()]
 
     public async Task<IEnumerable<BillRM>> QueryBills(long? accountId, long? vendorId, bool? isPaid = false)
     {
